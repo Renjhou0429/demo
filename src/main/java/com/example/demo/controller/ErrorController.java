@@ -4,9 +4,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ErrorController {
-    @GetMapping("/trigger-error")
-    public String triggerError2(@RequestParam(defaultValue = "N") String crash) {
-        System.out.println("crash param: " + crash);
+    @GetMapping("/triangle-error")
+    public String triangleError(@RequestParam(defaultValue = "N") String crash) {
         if ("Y".equalsIgnoreCase(crash)) {
             throw new RuntimeException("Simulated error.");
         }
@@ -17,26 +16,24 @@ public class ErrorController {
     public String validateTriangle(@RequestParam int a, @RequestParam int b, @RequestParam int c) {
         int typeIndex = -1;
         String[] triangleTypes = {
-            "正三角形 (Equilateral Triangle)",
-            "等腰三角形 (Isosceles Triangle)", 
-            "不等邊三角形 (Scalene Triangle)"
+            "Equilateral Triangle",
+            "Isosceles Triangle", 
+            "Scalene Triangle"
         };
-        
         if (a <= 0 || b <= 0 || c <= 0) {
-            throw new IllegalArgumentException("Triangle sides must be positive numbers");
+            throw new IllegalArgumentException("Triangle sides must be positive numbers.");
         }
-        
-        if (a + b > c && a + c > b) { 
+        if (a + b > c && a + c > b && b + c > a) {
             if (a == b && b == c) {
                 typeIndex = 0;
-            } else if (a == b || b == c) {
+            } else if (a == b || b == c || a == c) {
                 typeIndex = 1;
             } else {
                 typeIndex = 2;
             }
+        } else {
+            throw new IllegalArgumentException("Triangle sides must be positive numbers.");
         }
-
         return triangleTypes[typeIndex];
     }
-
 }
