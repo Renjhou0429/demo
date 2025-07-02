@@ -13,7 +13,7 @@ public class ErrorController {
         return "No error triggered.";
     }
 
-    @PostMapping("/validate-triangle")
+    @GetMapping("/validate-triangle")
     public String validateTriangle(@RequestParam int a, @RequestParam int b, @RequestParam int c) {
         int typeIndex = -1;
         String[] triangleTypes = {
